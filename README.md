@@ -107,7 +107,8 @@ sources:
 
 The relationship between our entities is defined as shown:
 
-![](https://fiware.github.io/tutorials.Context-Providers/img/entities.png)
+![](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/entities.png)
+
 
 # Architecture
 
@@ -135,7 +136,7 @@ Therefore, the architecture will consist of three elements:
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports.
 
-![](https://fiware.github.io/tutorials.Context-Providers/img/architecture.png)
+![](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/architecture.png)
 
 The necessary configuration information for the **Context Provider NGSI proxy** can be seen in the services section the
 of the associated `docker-compose.yml` file:
@@ -264,7 +265,7 @@ This command will also import seed data from the previous
 > :information_source: **Tip** You can also watch the status of recent requests yourself by following the container logs
 > or viewing information on `localhost:3000/app/monitor` on a web browser.
 >
-> ![FIWARE Monitor](https://fiware.github.io/tutorials.Context-Providers/img/monitor.png)
+> ![FIWARE Monitor](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/useContext1.png)
 
 ## Health Checks
 
