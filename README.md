@@ -297,9 +297,7 @@ If the proxy is correctly configured to connect to the Twitter API, a series of 
 
 The Twitter API uses OAuth2:
 
--   To get Consumer Key & Consumer Secret for the Twitter API, you have to create an app in Twitter via
-    [https://developer.twitter.com/](https://developer.twitter.com/). Then you'll be taken to a page containing Consumer
-    Key & Consumer Secret.
+-   To get Consumer Key & Consumer Secret for the Twitter API, you have to create an app in Twitter via [https://developer.twitter.com/](https://developer.twitter.com/). Then you'll be taken to a page containing Consumer Key & Consumer Secret.
 -   For more information see: [https://developer.twitter.com/](https://developer.twitter.com/)
 
 #### :three: Request:
@@ -355,8 +353,7 @@ As you can see details the `text` of each tweet is available within the `statuse
 
 This example returns the health of the Static Data Context Provider endpoint.
 
-A non-error response shows that an NGSI proxy is available on the network and returning values. Each Request will return
-the same data.
+A non-error response shows that an NGSI proxy is available on the network and returning values. Each Request will return the same data.
 
 #### :four: Request:
 
@@ -367,8 +364,7 @@ curl -X GET \
 
 #### Response:
 
-The response will contain a data about the current weather in Berlin. The full response is rather long, but a snippet
-can be seen below:
+The response will contain a data about the current weather in Berlin. The full response is rather long, but a snippet can be seen below:
 
 ```json
 {
@@ -399,15 +395,11 @@ can be seen below:
 }
 ```
 
-As you can see details of the current temperature and relative humidity are available within the attributes of the
-`current_observation`
+As you can see details of the current temperature and relative humidity are available within the attributes of the `current_observation`
 
 ## Accessing the NGSI v2 op/query Endpoint
 
-Because the `3000` port of the Context Provider has been exposed outside of the Docker container, it is possible for
-curl to make requests directly to the Context Provider - this simulates the requests that would have been made by the
-Orion Context Broker. You can also simulate making the requests as part of the docker container network by running the
-`appropriate/curl` Docker image.
+Because the `3000` port of the Context Provider has been exposed outside of the Docker container, it is possible for curl to make requests directly to the Context Provider - this simulates the requests that would have been made by the Orion Context Broker. You can also simulate making the requests as part of the docker container network by running the `appropriate/curl` Docker image.
 
 Firstly obtain the name of the network used within the Docker containers by running
 
@@ -426,11 +418,9 @@ As you can see, within the network, the hostname of the Context Provider is `con
 
 ### Retrieving a Single Attribute Value
 
-This example uses the NGSI v2 `op/query` endpoint to request a `temperature` reading from the Static Data Generator
-Context Provider. The requested attributes are found within the `attributes` array of the POST body.
+This example uses the NGSI v2 `op/query` endpoint to request a `temperature` reading from the Static Data Generator Context Provider. The requested attributes are found within the `attributes` array of the POST body.
 
-The Orion Context Broker will make similar requests to this `op/query` endpoint once a context provider has been
-registered.
+The Orion Context Broker will make similar requests to this `op/query` endpoint once a context provider has been registered.
 
 #### :five: Request:
 
@@ -454,8 +444,7 @@ curl -iX POST \
 
 #### Response:
 
-The response will be in NGSI v2 response format as shown. The `attributes` element holds the data returned - an object
-of `type:Number` with the `value:42`.
+The response will be in NGSI v2 response format as shown. The `attributes` element holds the data returned - an object of `type:Number` with the `value:42`.
 
 ```json
 [
@@ -472,9 +461,7 @@ of `type:Number` with the `value:42`.
 
 ### Retrieving Multiple Attribute Values
 
-It is possible for the Orion Context Broker to make a request for multiple data values . This example uses the NGSI v2
-`op/query` endpoint to request `temperature` and `relativeHumidity` readings from the Random Data Generator Context
-Provider. The requested attributes are found within the `attributes` array of the POST body.
+It is possible for the Orion Context Broker to make a request for multiple data values . This example uses the NGSI v2 `op/query` endpoint to request `temperature` and `relativeHumidity` readings from the Random Data Generator Context Provider. The requested attributes are found within the `attributes` array of the POST body.
 
 #### :six: Request:
 
@@ -520,8 +507,7 @@ The response will be in NGSI v2 response format as shown. The `attributes` eleme
 
 ## Context Provider Registration Actions
 
-All Context Provider Registration actions take place on the `v2/registrations` endpoint. The standard CRUD mappings
-apply:
+All Context Provider Registration actions take place on the `v2/registrations` endpoint. The standard CRUD mappings apply:
 
 -   Creation is mapped to the HTTP POST
 -   Reading/Listing registrations to HTTP GET verb
@@ -531,19 +517,16 @@ apply:
 
 This example registers the Random Data Context Provider with the Orion Context Broker.
 
-The body of the request states that: _"The URL_ `http://context-provider:3000/random/weatherConditions` _is capable of
-providing_ `relativeHumidity` and `temperature` _data for the entity called_ `id=urn:ngsi-ld:Store:001`._"_
+The body of the request states that: _"The URL_ `http://context-provider:3000/random/weatherConditions` _is capable of providing_ `relativeHumidity` and `temperature` _data for the entity called_ `id=urn:ngsi-ld:Store:001`._"_
 
-The values are **never** held within Orion, it is always requested on demand from the registered context provider. Orion
-merely holds the registration information about which context providers can offer context data.
+The values are **never** held within Orion, it is always requested on demand from the registered context provider. Orion merely holds the registration information about which context providers can offer context data.
 
-> _Note:_ if you have registered with the Weather API, you can retrieve live values for `temperature` and
+> _Note:_ if you have registered with the Weather API, you can retrieve live values for `temperature` and 
 > `relativeHumidity` in Berlin by placing the following `url` in the `provider`:
 >
 > -   `http://context-provider:3000/weather/weatherConditions/op/query`
 
-This request will return with a **201 - Created** response code. The `Location` Header of the response contains a path
-to the registration record held in Orion
+This request will return with a **201 - Created** response code. The `Location` Header of the response contains a path to the registration record held in Orion
 
 #### :seven: Request:
 
@@ -572,8 +555,7 @@ curl -iX POST \
 }'
 ```
 
-Once a Context Provider has been registered, the new context data will be included if the context of the **Store**
-entity `urn:ngsi-ld:Store:001` is requested using the `/entities/<entity-id>` endpoint:
+Once a Context Provider has been registered, the new context data will be included if the context of the **Store** entity `urn:ngsi-ld:Store:001` is requested using the `/entities/<entity-id>` endpoint:
 
 #### :eight: Request:
 
@@ -656,8 +638,7 @@ curl -X GET \
 
 This example lists all registered context providers
 
-Full context data for a specified entity type can be retrieved by making a GET request to the `/v2/registrations/`
-endpoint.
+Full context data for a specified entity type can be retrieved by making a GET request to the `/v2/registrations/` endpoint.
 
 #### :one::one: Request:
 
@@ -704,11 +685,10 @@ curl -iX DELETE \
 
 # Next Steps
 
-Want to learn how to add more complexity to your application by adding advanced features? You can find out by reading
-the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
+Want to learn how to add more complexity to your application by adding advanced features? You can find out by reading the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
 
 ---
 
-## License
+## Licenses
 
 [MIT](LICENSE) © 2018-2023 FIWARE Foundation e.V.
