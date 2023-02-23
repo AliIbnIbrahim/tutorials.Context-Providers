@@ -7,8 +7,8 @@
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial teaches FIWARE users about context data and context providers. The tutorial builds on the **Store** entity
-created in the previous [stock management example](https://github.com/FIWARE/tutorials.CRUD-Operations/) and enables a
-user to retrieve data about a store which is not held directly within the Orion Context Broker.
+created in the previous [stock management example](https://github.com/AliIbnIbrahim/tutorials.CRUD-Operations/tree/NGSI-v2/)  
+and enables a user to retrieve data about a store which is not held directly within the Orion Context Broker.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
 [Postman documentation](https://fiware.github.io/tutorials.Context-Providers/).
@@ -55,65 +55,50 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 >
 > — Samuel Johnson (Boswell's Life of Johnson)
 
-Within the FIWARE platform, an entity represents the state of a physical or conceptual object which exists in the real
-world. For example, a **Store** is a real world bricks and mortar building.
+Within the FIWARE platform, an entity represents the state of a physical or conceptual object which exists in the real world. For example, a **Store** is a real world bricks and mortar building.
 
 The context data of that entity defines the state of that real-world object at a given moment in time.
 
-In all of the tutorials so far, we are holding all of the context data for our **Store** entities directly within the
-Orion Context Broker, for example stores would have attributes such as:
+In all of the tutorials so far, we are holding all of the context data for our **Store** entities directly within the Orion Context Broker, for example stores would have attributes such as:
 
 -   A unique identifier for the store e.g. `urn:ngsi-ld:Store:002`
--   The name of the store e.g. "Checkpoint Markt"
--   The address "Friedrichstraße 44, 10969 Kreuzberg, Berlin"
+-   The name of the store e.g. "Marche au poisson"
+-   The address "Zone industrielle ain sebaa 20590 Casablanca"
 -   A physical location e.g. _52.5075 N, 13.3903 E_
 
-As you can see, most of these attributes are completely static (such as the location) and the others are unlikely to be
-changed on a regular basis - though a street could be renamed, or the store name could be rebranded.
+As you can see, most of these attributes are completely static (such as the location) and the others are unlikely to be changed on a regular basis - though a street could be renamed, or the store name could be rebranded.
 
-There is however another class of context data about the **Store** entity which is much more dynamic, information such
-as:
+There is however another class of context data about the **Store** entity which is much more dynamic, information such as:
 
 -   The current temperature at the store location
 -   The current relative humidity at the store location
 -   Recent social media tweets regarding the store
 
 This information is always changing, and if it were statically held in a database, the data would always be out-of-date.
-To keep the context data fresh, and to be able to retrieve the current state of the system on demand, new values for
-these dynamic data attributes will need to be retrieved whenever the entity context is requested.
+To keep the context data fresh, and to be able to retrieve the current state of the system on demand, new values for these dynamic data attributes will need to be retrieved whenever the entity context is requested.
 
-Smart solutions are designed to react on the current state of the real-world. They are "aware" since they rely on
-dynamic data readings from external sources (such social media, IoT sensors, user inputs). The FIWARE platform makes the
-gathering and presentation of real-time context data transparent, since whenever an
-[NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) request is made to the Orion Context Broker it will
-always return the latest context by combining the data held within its database along with real-time data readings from
-any registered external context providers.
+Smart solutions are designed to react on the current state of the real-world. They are "aware" since they rely on dynamic data readings from external sources (such social media, IoT sensors, user inputs). The FIWARE platform makes the gathering and presentation of real-time context data transparent, since whenever an [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) request is made to the Orion Context Broker it will always return the latest context by combining the data held within its database along with real-time data readings from any registered external context providers.
 
-In order to be able to fulfill these requests, the Orion Context Broker, must first be supplied with two types of
-information:
+In order to be able to fulfill these requests, the Orion Context Broker, must first be supplied with two types of information:
 
 -   The static context data held within Orion itself (_Entities that Orion "knows" about_)
--   Registered external context providers associated with existing entities (_Entities that Orion can "find information"
-    about_)
+-   Registered external context providers associated with existing entities (_Entities that Orion can "find information" about_)
 
 ## Entities within a stock management system
 
-Within our simple stock management system, our **Store** entity currently returns `id`, `name`, `address` and `location`
-attributes. We will augment this with additional real-time context data from the following free publicly available data
-sources:
+Within our simple stock management system, our **Store** entity currently returns `id`, `name`, `address` and `location` attributes. We will augment this with additional real-time context data from the following free publicly available data sources:
 
 -   The temperature and relative humidity from the [Open Weather Map API](https://openweathermap.org/api)
 -   Recent social media tweets regarding the store from the [Twitter API](https://developer.twitter.com/)
 
 The relationship between our entities is defined as shown:
 
-![](https://fiware.github.io/tutorials.Context-Providers/img/entities.png)
+![](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/entities.png)
+
 
 # Architecture
 
-This application will only make use of one FIWARE component - the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient
-for an application to qualify as _“Powered by FIWARE”_.
+This application will only make use of one FIWARE component - the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient for an application to qualify as _“Powered by FIWARE”_.
 
 Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
 persistence of the context data it holds. To request context data from external sources, we will now need to add a
@@ -121,24 +106,19 @@ simple Context Provider NGSI proxy.
 
 Therefore, the architecture will consist of three elements:
 
--   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using
-    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 -   The underlying [MongoDB](https://www.mongodb.com/) database :
-    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
-        registrations
+    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and registrations
 -   The **Context Provider NGSI proxy** which will:
     -   receive requests using [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
     -   makes requests to publicly available data sources using their own APIs in a proprietary format
-    -   returns context data back to the Orion Context Broker in
-        [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) format.
+    -   returns context data back to the Orion Context Broker in [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) format.
 
-Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
-from exposed ports.
+Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run from exposed ports.
 
-![](https://fiware.github.io/tutorials.Context-Providers/img/architecture.png)
+![](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/architecture.png)
 
-The necessary configuration information for the **Context Provider NGSI proxy** can be seen in the services section the
-of the associated `docker-compose.yml` file:
+The necessary configuration information for the **Context Provider NGSI proxy** can be seen in the services section the of the associated `docker-compose.yml` file:
 
 ```yaml
 tutorial:
@@ -174,7 +154,7 @@ The `tutorial` container is driven by environment variables as shown:
 The other `tutorial` container configuration values described in the YAML file are not used in this tutorial.
 
 The configuration information for MongoDB and the Orion Context Broker has been described in a
-[previous tutorial](https://github.com/FIWARE/tutorials.Entity-Relationships/)
+[previous tutorial](https://github.com/AliIbnIbrahim/tutorials.Entity-Relationships/tree/NGSI-v2)
 
 # Prerequisites
 
@@ -183,48 +163,33 @@ The configuration information for MongoDB and the Orion Context Broker has been 
 To keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container
 technology which allows to different components isolated into their respective environments.
 
--   To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)
--   To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)
--   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
+see [First Page of Tutorial] (https://github.com/AliIbnIbrahim/tutorials.NGSI-v2/blob/master/README.md) 
+for updated Docker and Docker-Compose installation 
 
-**Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used
-configure the required services for the application. This means all container services can be brought up in a single
-command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users
-will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
-You can check your current **Docker** and **Docker Compose** versions using the following commands:
+
+To check the current **Docker** and **Docker Compose** versions using the following commands:
 
 ```console
 docker-compose -v
 docker version
 ```
 
-Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29 or higher and upgrade if
-necessary.
+Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29 or higher and upgrade if necessary.
 
 ## Cygwin
-
-We will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/)
-to provide a command-line functionality similar to a Linux distribution on Windows.
+Cygwin is over dated , use UBUNTU LTS windows package 
 
 ## Context Provider NGSI proxy
 
-A simple [Node.js](https://nodejs.org/) [Express](https://expressjs.com/) application has been bundled as part of the
-repository. The application offers an NGSI v2 interface for four different context providers - the Open Weather Map API,
-the Twitter Search API and two dummy data context providers - a static data provider (which always returns the same
-data) and a random data context provider (which will change every time it is invoked).
+A simple [Node.js](https://nodejs.org/) [Express](https://expressjs.com/) application has been bundled as part of the repository. The application offers an NGSI v2 interface for four different context providers - the Open Weather Map API, the Twitter Search API and two dummy data context providers - a static data provider (which always returns the same data) and a random data context provider (which will change every time it is invoked).
 
-More information about the proxy endpoints can be found
-[here](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
+More information about the proxy endpoints can be found [here](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
 
--   In order to access the Open Weather Map API, you will need to sign up for a key at
-    `https://openweathermap.org/appid`
--   In order to access the Twitter Search API, you will have to create an app in Twitter via
-    `https://developer.twitter.com/` to obtain a Consumer Key & Consumer Secret.
+-   In order to access the Open Weather Map API, you will need to sign up for a key at   `https://openweathermap.org/appid`
+-   In order to access the Twitter Search API, you will have to create an app in Twitter via `https://developer.twitter.com/` to obtain a Consumer Key & Consumer Secret.
 
-Replace the placeholders in `docker-compose.yml` in the root of the repository with the values you obtain for your
-application:
+Replace the placeholders in `docker-compose.yml` in the root of the repository with the values you obtain for your application:
 
 ```yaml
 environment:
@@ -239,8 +204,7 @@ If you do not wish to sign-up for an API key, you can use data from the random d
 
 # Start Up
 
-All services can be initialised from the command-line by running the bash script provided within the repository. Please
-clone the repository and create the necessary images by running the commands as shown:
+All services can be initialised from the command-line by running the bash script provided within the repository. Please clone the repository and create the necessary images by running the commands as shown:
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Context-Providers.git
@@ -250,8 +214,7 @@ git checkout NGSI-v2
 ./services create; ./services start;
 ```
 
-This command will also import seed data from the previous
-[Stock Management example](https://github.com/FIWARE/tutorials.CRUD-Operations) on startup.
+This command will also import seed data from the previous [Stock Management example](https://github.com/FIWARE/tutorials.CRUD-Operations) on startup.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >
@@ -264,7 +227,7 @@ This command will also import seed data from the previous
 > :information_source: **Tip** You can also watch the status of recent requests yourself by following the container logs
 > or viewing information on `localhost:3000/app/monitor` on a web browser.
 >
-> ![FIWARE Monitor](https://fiware.github.io/tutorials.Context-Providers/img/monitor.png)
+> ![FIWARE Monitor](https://github.com/AliIbnIbrahim/tutorials.Context-Providers/blob/master/images/useContext1.png)
 
 ## Health Checks
 
