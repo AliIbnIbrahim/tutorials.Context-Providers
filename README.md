@@ -297,9 +297,7 @@ If the proxy is correctly configured to connect to the Twitter API, a series of 
 
 The Twitter API uses OAuth2:
 
--   To get Consumer Key & Consumer Secret for the Twitter API, you have to create an app in Twitter via
-    [https://developer.twitter.com/](https://developer.twitter.com/). Then you'll be taken to a page containing Consumer
-    Key & Consumer Secret.
+-   To get Consumer Key & Consumer Secret for the Twitter API, you have to create an app in Twitter via [https://developer.twitter.com/](https://developer.twitter.com/). Then you'll be taken to a page containing Consumer Key & Consumer Secret.
 -   For more information see: [https://developer.twitter.com/](https://developer.twitter.com/)
 
 #### :three: Request:
@@ -355,8 +353,7 @@ As you can see details the `text` of each tweet is available within the `statuse
 
 This example returns the health of the Static Data Context Provider endpoint.
 
-A non-error response shows that an NGSI proxy is available on the network and returning values. Each Request will return
-the same data.
+A non-error response shows that an NGSI proxy is available on the network and returning values. Each Request will return the same data.
 
 #### :four: Request:
 
@@ -367,8 +364,7 @@ curl -X GET \
 
 #### Response:
 
-The response will contain a data about the current weather in Berlin. The full response is rather long, but a snippet
-can be seen below:
+The response will contain a data about the current weather in Berlin. The full response is rather long, but a snippet can be seen below:
 
 ```json
 {
