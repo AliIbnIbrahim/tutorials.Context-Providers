@@ -98,8 +98,7 @@ The relationship between our entities is defined as shown:
 
 # Architecture
 
-This application will only make use of one FIWARE component - the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient for an application to qualify as _“Powered by FIWARE”_.
+This application will only make use of one FIWARE component - the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient for an application to qualify as _“Powered by FIWARE”_.
 
 Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
 persistence of the context data it holds. To request context data from external sources, we will now need to add a
@@ -176,29 +175,21 @@ docker-compose -v
 docker version
 ```
 
-Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29 or higher and upgrade if
-necessary.
+Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29 or higher and upgrade if necessary.
 
 ## Cygwin
 Cygwin is over dated , use UBUNTU LTS windows package 
 
 ## Context Provider NGSI proxy
 
-A simple [Node.js](https://nodejs.org/) [Express](https://expressjs.com/) application has been bundled as part of the
-repository. The application offers an NGSI v2 interface for four different context providers - the Open Weather Map API,
-the Twitter Search API and two dummy data context providers - a static data provider (which always returns the same
-data) and a random data context provider (which will change every time it is invoked).
+A simple [Node.js](https://nodejs.org/) [Express](https://expressjs.com/) application has been bundled as part of the repository. The application offers an NGSI v2 interface for four different context providers - the Open Weather Map API, the Twitter Search API and two dummy data context providers - a static data provider (which always returns the same data) and a random data context provider (which will change every time it is invoked).
 
-More information about the proxy endpoints can be found
-[here](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
+More information about the proxy endpoints can be found [here](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
 
--   In order to access the Open Weather Map API, you will need to sign up for a key at
-    `https://openweathermap.org/appid`
--   In order to access the Twitter Search API, you will have to create an app in Twitter via
-    `https://developer.twitter.com/` to obtain a Consumer Key & Consumer Secret.
+-   In order to access the Open Weather Map API, you will need to sign up for a key at   `https://openweathermap.org/appid`
+-   In order to access the Twitter Search API, you will have to create an app in Twitter via `https://developer.twitter.com/` to obtain a Consumer Key & Consumer Secret.
 
-Replace the placeholders in `docker-compose.yml` in the root of the repository with the values you obtain for your
-application:
+Replace the placeholders in `docker-compose.yml` in the root of the repository with the values you obtain for your application:
 
 ```yaml
 environment:
@@ -213,8 +204,7 @@ If you do not wish to sign-up for an API key, you can use data from the random d
 
 # Start Up
 
-All services can be initialised from the command-line by running the bash script provided within the repository. Please
-clone the repository and create the necessary images by running the commands as shown:
+All services can be initialised from the command-line by running the bash script provided within the repository. Please clone the repository and create the necessary images by running the commands as shown:
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Context-Providers.git
@@ -224,8 +214,7 @@ git checkout NGSI-v2
 ./services create; ./services start;
 ```
 
-This command will also import seed data from the previous
-[Stock Management example](https://github.com/FIWARE/tutorials.CRUD-Operations) on startup.
+This command will also import seed data from the previous [Stock Management example](https://github.com/FIWARE/tutorials.CRUD-Operations) on startup.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >
